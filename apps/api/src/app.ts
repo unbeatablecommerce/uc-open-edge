@@ -1,4 +1,4 @@
-import Fastify, { type FastifyInstance } from 'fastify';
+import Fastify from 'fastify';
 import fastifyCookie from '@fastify/cookie';
 import fastifyCors from '@fastify/cors';
 import fastifyHelmet from '@fastify/helmet';
@@ -27,7 +27,6 @@ export interface AppOptions {
   logger: Logger;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function buildApp(opts: AppOptions) {
   const app = Fastify({
     loggerInstance: opts.logger as never,

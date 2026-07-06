@@ -1,5 +1,4 @@
 import { createHash, randomBytes } from 'node:crypto';
-import { nanoid } from 'nanoid';
 
 const SESSION_TOKEN_BYTES = 48;
 const SESSION_DURATION_MS = 24 * 60 * 60 * 1000 * 7; // 7 days
