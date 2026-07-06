@@ -27,7 +27,7 @@
     "@uc-open-edge/connector-wes-template": "workspace:*",
     "@uc-open-edge/connector-amr-template": "workspace:*",
     "@uc-open-edge/connector-manufacturing-template": "workspace:*",
-    "mqtt": "^5.0.0"
+    "mqtt": "^5.15.2"
   },
   "devDependencies": {
     "tsx": "^4.0.0",

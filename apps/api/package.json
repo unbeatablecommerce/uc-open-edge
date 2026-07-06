@@ -24,7 +24,7 @@
     "@uc-open-edge/db": "workspace:*",
     "@uc-open-edge/normalizer": "workspace:*",
     "@uc-open-edge/schemas": "workspace:*",
-    "fastify": "^5.0.0",
+    "fastify": "^5.10.0",
     "fastify-plugin": "^6.0.0",
     "zod": "^3.23.0"
   },
