@@ -1,4 +1,4 @@
-import type { FastifyPluginAsync } from 'fastify';
+import type { FastifyPluginAsync, FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { verifyApiKey } from '../plugins/auth.js';
 import { ingestEvent } from '@uc-open-edge/normalizer';
 
@@ -17,11 +17,9 @@ export const ingestRoutes: FastifyPluginAsync = async (app) => {
 };
 
 async function handleIngest(
-  app: ReturnType<typeof import('fastify').default> & {
-    prisma: import('@uc-open-edge/db').PrismaClient;
-  },
-  req: import('fastify').FastifyRequest,
-  reply: import('fastify').FastifyReply,
+  app: FastifyInstance,
+  req: FastifyRequest,
+  reply: FastifyReply,
   connectorKey: string,
 ) {
   // Look up connector by name (key)

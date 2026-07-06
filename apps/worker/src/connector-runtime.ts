@@ -58,7 +58,7 @@ async function syncConnectors(
       continue;
     }
 
-    const connector = loadConnector(dbConnector.type);
+    const connector = await loadConnector(dbConnector.type);
     if (!connector) {
       logger.warn({ type: dbConnector.type, id: dbConnector.id }, 'Unknown connector type');
       continue;
@@ -135,46 +135,43 @@ async function checkConnectorHealth(
   }
 }
 
-function loadConnector(type: string): IConnector | null {
-  // Connectors are loaded dynamically. In production these would be
-  // dynamically imported. For the MVP we use a sync registry.
+async function loadConnector(type: string): Promise<IConnector | null> {
   switch (type) {
     case 'file_drop': {
-      const { FileDropConnector } = require('@uc-open-edge/connector-file-drop');
+      const { FileDropConnector } = await import('@uc-open-edge/connector-file-drop');
       return new FileDropConnector();
     }
     case 'csv': {
-      const { CsvConnector } = require('@uc-open-edge/connector-csv');
+      const { CsvConnector } = await import('@uc-open-edge/connector-csv');
       return new CsvConnector();
     }
     case 'rest_poll': {
-      const { RestPollConnector } = require('@uc-open-edge/connector-rest-poll');
+      const { RestPollConnector } = await import('@uc-open-edge/connector-rest-poll');
       return new RestPollConnector();
     }
     case 'mqtt': {
-      const { MqttConnector } = require('@uc-open-edge/connector-mqtt');
+      const { MqttConnector } = await import('@uc-open-edge/connector-mqtt');
       return new MqttConnector();
     }
     case 'opcua': {
-      const { OpcUaConnector } = require('@uc-open-edge/connector-opcua');
+      const { OpcUaConnector } = await import('@uc-open-edge/connector-opcua');
       return new OpcUaConnector();
     }
     case 'wms_template': {
-      const { WmsTemplateConnector } = require('@uc-open-edge/connector-wms-template');
+      const { WmsTemplateConnector } = await import('@uc-open-edge/connector-wms-template');
       return new WmsTemplateConnector();
     }
     case 'wes_template': {
-      const { WesTemplateConnector } = require('@uc-open-edge/connector-wes-template');
+      const { WesTemplateConnector } = await import('@uc-open-edge/connector-wes-template');
       return new WesTemplateConnector();
     }
     case 'amr_template': {
-      const { AmrTemplateConnector } = require('@uc-open-edge/connector-amr-template');
+      const { AmrTemplateConnector } = await import('@uc-open-edge/connector-amr-template');
       return new AmrTemplateConnector();
     }
     case 'manufacturing_template': {
-      const {
-        ManufacturingTemplateConnector,
-      } = require('@uc-open-edge/connector-manufacturing-template');
+      const { ManufacturingTemplateConnector } =
+        await import('@uc-open-edge/connector-manufacturing-template');
       return new ManufacturingTemplateConnector();
     }
     default:

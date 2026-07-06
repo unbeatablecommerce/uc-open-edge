@@ -1,6 +1,6 @@
 import type { FastifyPluginAsync } from 'fastify';
 import { z } from 'zod';
-import { requireSession, requireRole } from '../plugins/auth.js';
+import { requireRole } from '../plugins/auth.js';
 import { hashPassword } from '@uc-open-edge/auth';
 
 const CreateUserSchema = z.object({

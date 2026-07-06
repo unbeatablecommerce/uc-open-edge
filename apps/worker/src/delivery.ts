@@ -5,7 +5,11 @@ import { createHttpDestination } from './destinations/http.js';
 import { createFileDestination } from './destinations/file.js';
 import { createWebhookDestination } from './destinations/webhook.js';
 import { createMqttDestination } from './destinations/mqtt-dest.js';
-import type { IDestination, DestinationDeliveryContext } from '@uc-open-edge/destination-sdk';
+import type {
+  IDestination,
+  DestinationDeliveryContext,
+  DeliveryResult,
+} from '@uc-open-edge/destination-sdk';
 
 const MAX_RETRIES = 5;
 const POLL_INTERVAL_MS = 5000;
@@ -74,13 +78,11 @@ async function processDeliveries(prisma: PrismaClient, logger: Logger) {
     const eventPayload = buildEventPayload(delivery.normalizedEvent);
     const startMs = Date.now();
 
-    const result: import('@uc-open-edge/destination-sdk').DeliveryResult = await destination
-      .deliver(eventPayload, ctx)
-      .catch((err) => ({
-        success: false as const,
-        error: String(err),
-        durationMs: Date.now() - startMs,
-      }));
+    const result: DeliveryResult = await destination.deliver(eventPayload, ctx).catch((err) => ({
+      success: false as const,
+      error: String(err),
+      durationMs: Date.now() - startMs,
+    }));
 
     const newAttempts = delivery.attempts + 1;
 

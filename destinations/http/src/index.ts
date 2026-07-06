@@ -89,7 +89,6 @@ export class HttpDestination extends BaseDestination {
   }
 
   override async test(ctx: DestinationDeliveryContext): Promise<DeliveryResult> {
-    const config = HttpDestinationConfigSchema.parse(ctx.config);
     const testPayload = {
       test: true,
       destination: ctx.destinationId,
