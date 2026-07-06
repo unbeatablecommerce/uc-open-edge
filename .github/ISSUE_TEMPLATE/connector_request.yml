@@ -1,0 +1,112 @@
+name: Connector Request
+description: Request or propose a new source connector for UC Open Edge.
+title: '[Connector]: '
+labels: ['type: connector']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a new connector or announce that you are working on one.
+
+        Before opening, check [docs/connectors.md](https://github.com/unbeatablecommerce/uc-open-edge/blob/main/docs/connectors.md) to see if a connector or template already exists.
+
+        > **Do not include secrets, API keys, vendor credentials, or customer data in this issue.**
+
+  - type: input
+    id: connector-name
+    attributes:
+      label: Connector / system name
+      placeholder: 'e.g. Honeywell Vocollect, GreyOrange Butler, Infor WMS'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: system-type
+    attributes:
+      label: System type
+      options:
+        - WMS (Warehouse Management System)
+        - WES (Warehouse Execution System)
+        - AMR / autonomous mobile robot fleet manager
+        - PLC / OPC UA
+        - MQTT broker / IoT device
+        - Barcode / RFID scanner
+        - Scale / weigh station
+        - Smart shelf / sensor array
+        - Manufacturing / MES / SCADA
+        - ERP integration layer
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: vendor-product
+    attributes:
+      label: Vendor / product name
+      placeholder: 'e.g. Honeywell Vocollect SRX3 + VoiceConsole 5.x'
+    validations:
+      required: false
+
+  - type: textarea
+    id: protocol
+    attributes:
+      label: Protocol / API
+      description: How does UC Open Edge connect to this system? REST, MQTT, OPC UA, file drop, database query, WebSocket, proprietary SDK, etc.
+      placeholder: 'REST API (JSON over HTTPS) with OAuth 2.0 client credentials'
+    validations:
+      required: true
+
+  - type: textarea
+    id: event-types
+    attributes:
+      label: Event types needed
+      description: List the operational events this system emits that should be normalized.
+      placeholder: |
+        - task.assigned
+        - task.completed
+        - task.failed
+        - equipment.status.changed
+    validations:
+      required: true
+
+  - type: textarea
+    id: sample-payload
+    attributes:
+      label: Sample payload (anonymized)
+      description: |
+        An example of the raw payload this system sends. **Remove ALL secrets, credentials,
+        customer data, hostnames, and proprietary identifiers before pasting.**
+      render: json
+    validations:
+      required: false
+
+  - type: textarea
+    id: docs-links
+    attributes:
+      label: Documentation links
+      description: Public API docs, protocol specs, or vendor developer portal URLs.
+    validations:
+      required: false
+
+  - type: textarea
+    id: sdk-license
+    attributes:
+      label: Commercial / proprietary SDK or license notes
+      description: |
+        Does integrating with this system require a proprietary vendor SDK, a paid license,
+        or signing an NDA? If yes, describe — we cannot bundle proprietary SDKs in the
+        open-source connector without a compatible license.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: willing-to-contribute
+    attributes:
+      label: Willing to contribute this connector?
+      options:
+        - 'Yes — I can implement and maintain this connector'
+        - 'Yes — I can contribute a first draft but need help'
+        - 'No — requesting that the maintainers build it'
+        - 'Unsure'
+    validations:
+      required: true

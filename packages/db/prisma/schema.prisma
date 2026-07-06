@@ -1,0 +1,389 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum Role {
+  admin
+  operator
+  viewer
+}
+
+enum EventStatus {
+  pending
+  processing
+  normalized
+  invalid
+  duplicate
+  failed
+}
+
+enum DeliveryStatus {
+  pending
+  in_progress
+  delivered
+  failed
+  skipped
+}
+
+enum ConnectorType {
+  webhook
+  file_drop
+  csv
+  rest_poll
+  mqtt
+  opcua
+  wms_template
+  wes_template
+  amr_template
+  manufacturing_template
+}
+
+enum ConnectorStatus {
+  active
+  error
+  idle
+  disabled
+}
+
+enum DestinationType {
+  http
+  file
+  webhook
+  mqtt
+}
+
+enum DestinationStatus {
+  active
+  error
+  idle
+  disabled
+}
+
+enum MappingType {
+  sku
+  location
+  equipment
+  robot
+  custom
+}
+
+enum EventDomain {
+  inventory
+  location
+  task
+  equipment
+  robotics
+  manufacturing
+  quality
+  maintenance
+  sensor
+  container
+  shipment
+  order_fulfillment
+  system
+}
+
+// ─── Models ──────────────────────────────────────────────────────────────────
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         Role      @default(viewer)
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lastLoginAt  DateTime?
+
+  sessions  Session[]
+  apiKeys   ApiKey[]
+  auditLogs AuditLog[]
+
+  @@map("users")
+}
+
+model Session {
+  id         String    @id @default(cuid())
+  userId     String
+  tokenHash  String    @unique
+  expiresAt  DateTime
+  createdAt  DateTime  @default(now())
+  revokedAt  DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model ApiKey {
+  id         String    @id @default(cuid())
+  name       String
+  keyHash    String    @unique
+  keyPrefix  String
+  scope      String    @default("ingest")
+  active     Boolean   @default(true)
+  expiresAt  DateTime?
+  createdAt  DateTime  @default(now())
+  revokedAt  DateTime?
+  lastUsedAt DateTime?
+  userId     String?
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([keyPrefix])
+  @@map("api_keys")
+}
+
+model SourceSystem {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  type        String
+  description String?
+  active      Boolean  @default(true)
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  connectors       Connector[]
+  rawEvents        RawEvent[]
+  normalizedEvents NormalizedEvent[]
+  mappings         Mapping[]
+
+  @@map("source_systems")
+}
+
+model Connector {
+  id            String          @id @default(cuid())
+  name          String          @unique
+  type          ConnectorType
+  sourceSystemId String
+  enabled       Boolean         @default(true)
+  config        Json            @default("{}")
+  status        ConnectorStatus @default(idle)
+  lastSeenAt    DateTime?
+  lastSuccessAt DateTime?
+  lastErrorAt   DateTime?
+  lastError     String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  sourceSystem     SourceSystem      @relation(fields: [sourceSystemId], references: [id])
+  rawEvents        RawEvent[]
+  normalizedEvents NormalizedEvent[]
+  health           ConnectorHealth[]
+
+  @@index([sourceSystemId])
+  @@index([type])
+  @@map("connectors")
+}
+
+model Destination {
+  id            String            @id @default(cuid())
+  name          String            @unique
+  type          DestinationType
+  enabled       Boolean           @default(true)
+  config        Json              @default("{}")
+  status        DestinationStatus @default(idle)
+  lastSuccessAt DateTime?
+  lastErrorAt   DateTime?
+  lastError     String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  deliveries       EventDelivery[]
+  deliveryAttempts DeliveryAttempt[]
+
+  @@index([type])
+  @@map("destinations")
+}
+
+model RawEvent {
+  id               String    @id @default(cuid())
+  sourceSystemId   String?
+  connectorId      String?
+  externalEventId  String?
+  payload          Json
+  headers          Json?
+  receivedAt       DateTime  @default(now())
+  parseStatus      String    @default("ok")
+  validationStatus String    @default("pending")
+  normalizedEventId String?
+  errorMessage     String?
+  payloadHash      String?
+
+  sourceSystem     SourceSystem?     @relation(fields: [sourceSystemId], references: [id])
+  connector        Connector?        @relation(fields: [connectorId], references: [id])
+  normalizedEvent  NormalizedEvent?  @relation(fields: [normalizedEventId], references: [id])
+
+  @@index([connectorId])
+  @@index([sourceSystemId])
+  @@index([receivedAt])
+  @@index([payloadHash])
+  @@map("raw_events")
+}
+
+model NormalizedEvent {
+  id               String      @id @default(cuid())
+  eventId          String      @unique @default(cuid())
+  eventType        String
+  domain           EventDomain
+  sourceSystemId   String?
+  connectorId      String?
+  rawEventId       String?
+  externalEventId  String?
+  dedupeKey        String?
+  occurredAt       DateTime
+  receivedAt       DateTime    @default(now())
+  processedAt      DateTime?
+  status           EventStatus @default(pending)
+  siteRef          Json?
+  areaRef          Json?
+  zoneRef          Json?
+  locationRef      Json?
+  fromLocationRef  Json?
+  toLocationRef    Json?
+  skuRef           Json?
+  itemRef          Json?
+  containerRef     Json?
+  equipmentRef     Json?
+  robotRef         Json?
+  taskRef          Json?
+  workOrderRef     Json?
+  quantity         Decimal?
+  unitOfMeasure    String?
+  payload          Json?
+  metadata         Json?
+  validationErrors Json?
+
+  sourceSystem SourceSystem? @relation(fields: [sourceSystemId], references: [id])
+  connector    Connector?    @relation(fields: [connectorId], references: [id])
+  rawEvents    RawEvent[]
+  deliveries   EventDelivery[]
+  deliveryAttempts DeliveryAttempt[]
+
+  @@unique([sourceSystemId, externalEventId])
+  @@unique([connectorId, dedupeKey])
+  @@index([eventType])
+  @@index([domain])
+  @@index([occurredAt])
+  @@index([receivedAt])
+  @@index([status])
+  @@map("normalized_events")
+}
+
+model EventDelivery {
+  id               String         @id @default(cuid())
+  normalizedEventId String
+  destinationId    String
+  status           DeliveryStatus @default(pending)
+  attempts         Int            @default(0)
+  nextAttemptAt    DateTime       @default(now())
+  lastAttemptAt    DateTime?
+  lastStatusCode   Int?
+  lastError        String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  normalizedEvent  NormalizedEvent   @relation(fields: [normalizedEventId], references: [id])
+  destination      Destination       @relation(fields: [destinationId], references: [id])
+  attempts_log     DeliveryAttempt[]
+
+  @@unique([normalizedEventId, destinationId])
+  @@index([status])
+  @@index([nextAttemptAt])
+  @@index([destinationId])
+  @@map("event_deliveries")
+}
+
+model DeliveryAttempt {
+  id               String   @id @default(cuid())
+  eventDeliveryId  String
+  destinationId    String
+  normalizedEventId String
+  status           DeliveryStatus
+  statusCode       Int?
+  requestBody      Json?
+  responseBody     String?
+  error            String?
+  attemptedAt      DateTime @default(now())
+  durationMs       Int?
+
+  eventDelivery    EventDelivery   @relation(fields: [eventDeliveryId], references: [id], onDelete: Cascade)
+  destination      Destination     @relation(fields: [destinationId], references: [id])
+  normalizedEvent  NormalizedEvent @relation(fields: [normalizedEventId], references: [id])
+
+  @@index([eventDeliveryId])
+  @@index([destinationId])
+  @@index([attemptedAt])
+  @@map("delivery_attempts")
+}
+
+model Mapping {
+  id             String      @id @default(cuid())
+  sourceSystemId String?
+  type           MappingType
+  externalKey    String
+  internalKey    String
+  displayName    String?
+  metadata       Json?
+  active         Boolean     @default(true)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  sourceSystem SourceSystem? @relation(fields: [sourceSystemId], references: [id])
+
+  @@unique([sourceSystemId, type, externalKey])
+  @@index([type])
+  @@map("mappings")
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  actorUserId  String?
+  action       String
+  resourceType String?
+  resourceId   String?
+  metadata     Json?
+  createdAt    DateTime @default(now())
+
+  actor User? @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([actorUserId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model AppSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@map("app_settings")
+}
+
+model ConnectorHealth {
+  id          String          @id @default(cuid())
+  connectorId String
+  status      ConnectorStatus
+  message     String?
+  checkedAt   DateTime        @default(now())
+  metadata    Json?
+
+  connector Connector @relation(fields: [connectorId], references: [id], onDelete: Cascade)
+
+  @@index([connectorId])
+  @@index([checkedAt])
+  @@map("connector_health")
+}

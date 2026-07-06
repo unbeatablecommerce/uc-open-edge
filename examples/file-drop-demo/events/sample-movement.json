@@ -1,0 +1,23 @@
+[
+  {
+    "eventType": "inventory.movement.reported",
+    "externalEventId": "file-move-001",
+    "occurredAt": "2026-07-05T12:00:00.000Z",
+    "skuRef": { "externalSku": "ABC-123" },
+    "fromLocationRef": { "externalLocationId": "BULK-A-17" },
+    "toLocationRef": { "externalLocationId": "PICKFACE-04-02-09" },
+    "quantity": 6,
+    "unitOfMeasure": "EA",
+    "metadata": { "source": "file-drop-demo" }
+  },
+  {
+    "eventType": "inventory.quantity.observed",
+    "externalEventId": "file-obs-001",
+    "occurredAt": "2026-07-05T12:01:00.000Z",
+    "skuRef": { "externalSku": "ABC-123" },
+    "locationRef": { "externalLocationId": "PICKFACE-04-02-09" },
+    "quantity": 3,
+    "unitOfMeasure": "EA",
+    "metadata": { "source": "smart-shelf-sensor" }
+  }
+]

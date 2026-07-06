@@ -1,0 +1,84 @@
+name: Destination Request
+description: Request or propose a new event delivery destination for UC Open Edge.
+title: '[Destination]: '
+labels: ['type: destination']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a new destination or announce that you are working on one.
+
+        Check [docs/destinations.md](https://github.com/unbeatablecommerce/uc-open-edge/blob/main/docs/destinations.md) for existing destinations before opening.
+
+        > **Do not include secrets, API keys, or customer data in this issue.**
+
+  - type: input
+    id: destination-name
+    attributes:
+      label: Destination name
+      placeholder: 'e.g. AWS SQS, Azure Service Bus, Salesforce CRM, SAP ECC, Kafka topic'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: destination-type
+    attributes:
+      label: Destination type
+      options:
+        - HTTP / REST API
+        - Webhook (with HMAC signing)
+        - MQTT broker
+        - File / JSONL / CSV
+        - Relational database
+        - Message queue (SQS, RabbitMQ, etc.)
+        - Cloud platform (Azure Event Hub, AWS Kinesis, etc.)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: auth-signing
+    attributes:
+      label: Auth / signing requirements
+      description: How does the destination authenticate requests? API key header, OAuth 2.0, HMAC signature, mTLS, etc.
+      placeholder: 'HMAC-SHA256 signature in X-Signature header; Bearer token in Authorization header'
+    validations:
+      required: false
+
+  - type: textarea
+    id: payload-format
+    attributes:
+      label: Payload format
+      description: What payload format does the destination expect? JSON envelope, CloudEvents, flat object, CSV, custom schema?
+      placeholder: 'CloudEvents 1.0 JSON format with application/cloudevents+json content type'
+    validations:
+      required: false
+
+  - type: textarea
+    id: retry-expectations
+    attributes:
+      label: Retry / delivery expectations
+      description: Does the destination require at-least-once delivery? Any idempotency key support? Rate limits?
+      placeholder: 'At-least-once required; idempotency key in X-Idempotency-Key header; max 100 req/s'
+    validations:
+      required: false
+
+  - type: textarea
+    id: docs-links
+    attributes:
+      label: Documentation links
+      description: Public API docs, integration guides, or SDK links.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: willing-to-contribute
+    attributes:
+      label: Willing to contribute this destination?
+      options:
+        - 'Yes — I can implement and maintain this destination'
+        - 'Yes — I can contribute a first draft but need help'
+        - 'No — requesting that the maintainers build it'
+        - 'Unsure'
+    validations:
+      required: true

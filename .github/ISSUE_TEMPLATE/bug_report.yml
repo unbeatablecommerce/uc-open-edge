@@ -1,0 +1,108 @@
+name: Bug Report
+description: Report a reproducible bug in UC Open Edge.
+title: '[Bug]: '
+labels: ['type: bug', 'needs reproduction']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please fill in as much detail as possible.
+
+        > **Security issues** — do NOT open a public issue. See [SECURITY.md](https://github.com/unbeatablecommerce/uc-open-edge/blob/main/SECURITY.md) for the responsible disclosure process.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: A clear, one-line description of the bug.
+      placeholder: 'e.g. Webhook connector does not ingest events when payload > 64 KB'
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      description: Version number or full git commit SHA where the bug appears.
+      placeholder: 'e.g. v0.2.1 or a3f8c21'
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Node.js version, pnpm version, Docker version (if relevant), deployment method.
+      placeholder: |
+        OS: Ubuntu 22.04
+        Node.js: 22.3.0
+        pnpm: 11.10.0
+        Docker: 27.0.0
+        Deployment: docker compose
+    validations:
+      required: true
+
+  - type: input
+    id: connector-destination
+    attributes:
+      label: Connector / destination involved (if any)
+      placeholder: 'e.g. connector: webhook, destination: http'
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps that reliably reproduce the issue.
+      placeholder: |
+        1. Create a webhook connector named 'demo'
+        2. POST a payload > 64 KB to /api/ingest/webhook/demo
+        3. Observe that the event does not appear in the Events list
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: The event should be ingested and appear in the Events list with status 'normalized'.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: The API returns a 500 error and the event is not stored.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: |
+        Paste relevant log output or attach screenshots.
+        **Remove any secrets, API keys, passwords, or customer data before pasting.**
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Anything else that might help — config snippets, related issues, workarounds tried.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: no-secrets
+    attributes:
+      label: Confirmation
+      options:
+        - label: >
+            I have reviewed this report and confirm it does not contain secrets, API keys,
+            passwords, customer data, or proprietary vendor information.
+          required: true

@@ -1,0 +1,57 @@
+version: 2
+updates:
+  # ─── npm / pnpm ────────────────────────────────────────────────────────────
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: UTC
+    open-pull-requests-limit: 5
+    # Group minor and patch updates into a single PR to reduce noise.
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # Avoid major version bumps for these packages without explicit review.
+      - dependency-name: '@prisma/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'prisma'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@sveltejs/kit'
+        update-types: ['version-update:semver-major']
+    labels:
+      - 'type: security'
+    commit-message:
+      prefix: 'chore(deps)'
+
+  # ─── GitHub Actions ─────────────────────────────────────────────────────────
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: UTC
+    open-pull-requests-limit: 5
+    labels:
+      - 'type: security'
+    commit-message:
+      prefix: 'chore(actions)'
+
+  # ─── Docker ─────────────────────────────────────────────────────────────────
+  - package-ecosystem: docker
+    directory: /docker
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: UTC
+    open-pull-requests-limit: 5
+    labels:
+      - 'type: security'
+    commit-message:
+      prefix: 'chore(docker)'

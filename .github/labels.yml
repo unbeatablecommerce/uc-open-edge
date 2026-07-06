@@ -1,0 +1,106 @@
+# UC Open Edge — GitHub Labels
+#
+# This file documents the intended label set for the repository.
+# To apply these labels automatically, use a label-sync tool such as:
+#   - github.com/marketplace/actions/label-syncer
+#   - github.com/cli/cli (gh label create)
+#
+# Format: name, color (hex without #), description
+
+labels:
+  # ─── Type ──────────────────────────────────────────────────────────────────
+  - name: 'type: bug'
+    color: 'd73a4a'
+    description: Something is not working correctly.
+
+  - name: 'type: feature'
+    color: '0075ca'
+    description: New feature or enhancement request.
+
+  - name: 'type: connector'
+    color: '5319e7'
+    description: Related to a source connector.
+
+  - name: 'type: destination'
+    color: '7057ff'
+    description: Related to an event delivery destination.
+
+  - name: 'type: docs'
+    color: '0052cc'
+    description: Documentation improvement or fix.
+
+  - name: 'type: security'
+    color: 'e4e669'
+    description: Security-related issue or dependency update.
+
+  - name: 'type: question'
+    color: 'd876e3'
+    description: Further information is requested or this is a question.
+
+  # ─── Domain ────────────────────────────────────────────────────────────────
+  - name: 'domain: inventory'
+    color: 'bfd4f2'
+    description: Inventory movement, SKU, or stock events.
+
+  - name: 'domain: robotics'
+    color: 'bfd4f2'
+    description: AMR, robot task, or fleet events.
+
+  - name: 'domain: manufacturing'
+    color: 'bfd4f2'
+    description: MES, PLC, production, or quality events.
+
+  - name: 'domain: warehouse'
+    color: 'bfd4f2'
+    description: WMS, WES, picking, packing, or shipping events.
+
+  - name: 'domain: mqtt'
+    color: 'bfd4f2'
+    description: MQTT connector or destination.
+
+  - name: 'domain: opcua'
+    color: 'bfd4f2'
+    description: OPC UA connector.
+
+  - name: 'domain: auth'
+    color: 'f9d0c4'
+    description: Authentication, sessions, or API keys.
+
+  - name: 'domain: database'
+    color: 'f9d0c4'
+    description: Prisma schema, migrations, or database queries.
+
+  # ─── Priority ──────────────────────────────────────────────────────────────
+  - name: 'priority: high'
+    color: 'b60205'
+    description: Should be addressed in the next release.
+
+  - name: 'priority: medium'
+    color: 'fbca04'
+    description: Important but not blocking.
+
+  - name: 'priority: low'
+    color: '0e8a16'
+    description: Nice to have; address when convenient.
+
+  # ─── Community / workflow ──────────────────────────────────────────────────
+  - name: 'good first issue'
+    color: '7fc97f'
+    description: Good for newcomers to the project.
+
+  - name: 'help wanted'
+    color: '008672'
+    description: Extra attention or community help is needed.
+
+  - name: 'needs reproduction'
+    color: 'e4e669'
+    description: Bug report needs a minimal reproduction case.
+
+  - name: 'blocked'
+    color: 'e4e669'
+    description: Blocked by another issue or external dependency.
+
+  - name: 'breaking change'
+    color: 'b60205'
+    description: >
+      This change breaks backward compatibility (schema, API contract, auth, config).

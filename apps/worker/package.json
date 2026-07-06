@@ -1,0 +1,37 @@
+{
+  "name": "@uc-open-edge/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@uc-open-edge/config": "workspace:*",
+    "@uc-open-edge/core": "workspace:*",
+    "@uc-open-edge/db": "workspace:*",
+    "@uc-open-edge/normalizer": "workspace:*",
+    "@uc-open-edge/schemas": "workspace:*",
+    "@uc-open-edge/connector-sdk": "workspace:*",
+    "@uc-open-edge/destination-sdk": "workspace:*",
+    "@uc-open-edge/connector-file-drop": "workspace:*",
+    "@uc-open-edge/connector-csv": "workspace:*",
+    "@uc-open-edge/connector-rest-poll": "workspace:*",
+    "@uc-open-edge/connector-mqtt": "workspace:*",
+    "@uc-open-edge/connector-opcua": "workspace:*",
+    "@uc-open-edge/connector-wms-template": "workspace:*",
+    "@uc-open-edge/connector-wes-template": "workspace:*",
+    "@uc-open-edge/connector-amr-template": "workspace:*",
+    "@uc-open-edge/connector-manufacturing-template": "workspace:*",
+    "mqtt": "^5.0.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

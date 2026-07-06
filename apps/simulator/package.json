@@ -1,0 +1,26 @@
+{
+  "name": "@uc-open-edge/simulator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "uc-simulate": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@uc-open-edge/config": "workspace:*",
+    "@uc-open-edge/core": "workspace:*",
+    "@uc-open-edge/schemas": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

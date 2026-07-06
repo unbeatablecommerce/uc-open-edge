@@ -1,0 +1,27 @@
+{
+  "name": "@uc-open-edge/admin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite dev --port 3000",
+    "preview": "vite preview --port 3000",
+    "typecheck": "svelte-kit sync && tsc --noEmit"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-node": "^5.0.0",
+    "@sveltejs/kit": "^2.69.1",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "@tailwindcss/vite": "^4.3.2",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.0.0",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^5.5.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.0.0"
+  },
+  "dependencies": {
+    "@uc-open-edge/config": "workspace:*"
+  }
+}

@@ -1,0 +1,7 @@
+dist/
+node_modules/
+.svelte-kit/
+build/
+prisma/migrations/
+*.json.lock
+pnpm-lock.yaml

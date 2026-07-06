@@ -1,0 +1,45 @@
+{
+  "name": "uc-open-edge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open-source local edge integration framework for connecting warehouse, robotics, manufacturing, automation, sensor, and operational systems to business platforms.",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@11.10.0",
+  "scripts": {
+    "postinstall": "node scripts/patch-sveltekit-guard.mjs",
+    "build": "pnpm -r build",
+    "dev": "pnpm --parallel -r dev",
+    "lint": "eslint . --ext .ts,.tsx,.svelte",
+    "lint:fix": "eslint . --ext .ts,.tsx,.svelte --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "db:migrate": "pnpm --filter @uc-open-edge/db db:migrate",
+    "db:seed": "pnpm --filter @uc-open-edge/db db:seed",
+    "db:studio": "pnpm --filter @uc-open-edge/db db:studio",
+    "db:generate": "pnpm --filter @uc-open-edge/db db:generate",
+    "db:migrate:dev": "pnpm --filter @uc-open-edge/db db:migrate:dev",
+    "db:validate": "pnpm --filter @uc-open-edge/db db:validate",
+    "db:reset": "pnpm --filter @uc-open-edge/db db:reset",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.3.0",
+    "prettier-plugin-svelte": "^4.1.1",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

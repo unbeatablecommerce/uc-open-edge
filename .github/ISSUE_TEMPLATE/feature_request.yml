@@ -1,0 +1,74 @@
+name: Feature Request
+description: Propose a new feature or enhancement for UC Open Edge.
+title: '[Feature]: '
+labels: ['type: feature']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement. Please describe the problem and your proposed solution.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What problem does this feature solve? What workflow is currently broken or painful?
+      placeholder: 'e.g. There is no way to filter events by source system in the Admin UI, so finding relevant events when multiple connectors are active is slow.'
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe the feature you would like to see.
+      placeholder: "Add a 'Source System' filter dropdown to the Events list page."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other solutions you considered and why they are less suitable.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Domain impacted
+      multiple: true
+      options:
+        - Connector SDK / connectors
+        - Destination SDK / destinations
+        - Event schema / normalization
+        - Ingest API
+        - Admin UI
+        - Worker / delivery
+        - Database / migrations
+        - Auth / security
+        - Docs / examples
+        - CI / DevOps
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - MVP — should be in the core product soon
+        - Future — useful but not urgent
+        - Nice-to-have / polish
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Links, mockups, related issues, or implementation notes.
+    validations:
+      required: false

@@ -1,0 +1,56 @@
+name: Documentation Issue
+description: Report a gap, error, or improvement needed in the UC Open Edge documentation.
+title: '[Docs]: '
+labels: ['type: docs']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the documentation.
+
+  - type: input
+    id: page-section
+    attributes:
+      label: Page / section
+      description: Which document or section is affected?
+      placeholder: 'e.g. docs/connector-development.md — Step 3: Registering a connector'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue type
+      options:
+        - Inaccurate / outdated content
+        - Missing information
+        - Unclear explanation
+        - Broken link or reference
+        - Typo / formatting
+        - Example code doesn't work
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the issue
+      placeholder: "The example in 'Creating a connector' uses the old IConnector interface shape. The new shape requires an async start() method but the example shows a synchronous one."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested improvement
+      description: If you have a suggested fix or replacement text, add it here.
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+    validations:
+      required: false

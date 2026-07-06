@@ -1,0 +1,34 @@
+# CODEOWNERS — UC Open Edge
+#
+# Replace @YOUR_GITHUB_USERNAME with the actual GitHub username(s) or team (e.g. @myorg/maintainers)
+# before merging this file. Multiple owners can be listed space-separated on each line.
+#
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default — everything not matched by a more specific rule
+*                          @unbeatablecommerce/maintainers
+
+# Core event schema
+/packages/schemas/         @unbeatablecommerce/maintainers
+
+# Auth layer (sessions, API keys, password hashing)
+/packages/auth/            @unbeatablecommerce/maintainers
+
+# Database schema and migrations — extra care required
+/packages/db/              @unbeatablecommerce/maintainers
+
+# API server
+/apps/api/                 @unbeatablecommerce/maintainers
+
+# Connector implementations
+/connectors/               @unbeatablecommerce/maintainers
+
+# Destination implementations
+/destinations/             @unbeatablecommerce/maintainers
+
+# CI/CD workflows
+/.github/workflows/        @unbeatablecommerce/maintainers
+
+# Security documentation
+/docs/security.md          @unbeatablecommerce/maintainers
+/SECURITY.md               @unbeatablecommerce/maintainers
