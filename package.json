@@ -13,6 +13,7 @@
     "postinstall": "node scripts/patch-sveltekit-guard.mjs",
     "build": "pnpm -r build",
     "dev": "pnpm --parallel -r dev",
+    "prelint": "pnpm --filter @uc-open-edge/admin exec svelte-kit sync",
     "lint": "eslint . --ext .ts,.tsx,.svelte",
     "lint:fix": "eslint . --ext .ts,.tsx,.svelte --fix",
     "format": "prettier --write .",
