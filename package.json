@@ -31,14 +31,14 @@
     "docker:logs": "docker compose logs -f"
   },
   "devDependencies": {
-    "@types/node": "^26.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
+    "@types/node": "^26.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.63.0",
+    "@typescript-eslint/parser": "^8.63.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-svelte": "^3.20.0",
-    "prettier": "^3.3.0",
+    "prettier": "^3.9.5",
     "prettier-plugin-svelte": "^4.1.1",
     "svelte-eslint-parser": "^1.8.0",
     "typescript": "^5.5.0",
