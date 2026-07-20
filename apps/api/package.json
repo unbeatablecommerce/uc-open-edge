@@ -12,11 +12,11 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@fastify/cookie": "^11.0.0",
+    "@fastify/cookie": "^11.1.2",
     "@fastify/cors": "^10.0.0",
-    "@fastify/helmet": "^13.0.0",
+    "@fastify/helmet": "^13.1.0",
     "@fastify/rate-limit": "^10.0.0",
-    "@fastify/swagger": "^9.0.0",
+    "@fastify/swagger": "^9.8.1",
     "@fastify/swagger-ui": "^5.0.0",
     "@uc-open-edge/auth": "workspace:*",
     "@uc-open-edge/config": "workspace:*",
@@ -24,12 +24,12 @@
     "@uc-open-edge/db": "workspace:*",
     "@uc-open-edge/normalizer": "workspace:*",
     "@uc-open-edge/schemas": "workspace:*",
-    "fastify": "^5.0.0",
+    "fastify": "^5.10.0",
     "fastify-plugin": "^6.0.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
-    "tsx": "^4.0.0",
+    "tsx": "^4.23.1",
     "typescript": "^5.5.0",
     "vitest": "^2.0.0"
   }
