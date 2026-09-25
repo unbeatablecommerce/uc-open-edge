@@ -5,7 +5,7 @@ export const healthRoutes: FastifyPluginAsync = async (app) => {
     try {
       await app.prisma.$queryRaw`SELECT 1`;
       return reply.send({ status: 'ok', db: 'ok', uptime: process.uptime() });
-    } catch (err) {
+    } catch {
       return reply.status(503).send({ status: 'error', db: 'unreachable' });
     }
   });

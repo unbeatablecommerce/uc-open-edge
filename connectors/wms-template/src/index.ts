@@ -53,7 +53,7 @@ export class WmsTemplateConnector extends BaseConnector {
     await this.poll(ctx, config);
   }
 
-  private async poll(ctx: ConnectorRunContext, config: WmsConnectorConfig): Promise<void> {
+  private async poll(ctx: ConnectorRunContext, _config: WmsConnectorConfig): Promise<void> {
     try {
       /**
        * STUB: Replace this section with real WMS API calls.

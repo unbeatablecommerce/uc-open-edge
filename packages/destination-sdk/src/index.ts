@@ -66,7 +66,7 @@ export abstract class BaseDestination implements IDestination {
     ctx: DestinationDeliveryContext,
   ): Promise<DeliveryResult>;
 
-  async test(ctx: DestinationDeliveryContext): Promise<DeliveryResult> {
+  async test(_ctx: DestinationDeliveryContext): Promise<DeliveryResult> {
     return {
       success: true,
       responseBody: 'Test not implemented for this destination type',
