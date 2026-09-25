@@ -15,7 +15,9 @@ env:
 jobs:
   validation:
     name: All Checks Passed
-    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-latest' }}
+    # This public repository accepts untrusted fork pull requests. Keep CI on
+    # isolated GitHub-hosted runners rather than the private UC runner pool.
+    runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:16-alpine
@@ -57,12 +59,14 @@ jobs:
       - name: Generate and validate Prisma client
         if: steps.changes.outputs.runtime == 'true' && github.event_name != 'push'
         run: pnpm db:generate && pnpm db:validate
+      - name: Build all packages
+        if: steps.changes.outputs.runtime == 'true' && github.event_name != 'push'
+        # Workspace consumers resolve generated declarations from dependency builds.
+        run: pnpm build
       - name: Static checks
         if: steps.changes.outputs.runtime == 'true' && github.event_name != 'push'
-        run: pnpm lint && pnpm typecheck
+        # SvelteKit sync runs during typecheck and creates the tsconfig consumed by ESLint.
+        run: pnpm typecheck && pnpm lint
       - name: Run migrations and tests
         if: steps.changes.outputs.runtime == 'true' && github.event_name != 'push'
         run: pnpm db:migrate && pnpm test
-      - name: Build all packages
-        if: steps.changes.outputs.runtime == 'true' && github.event_name != 'push'
-        run: pnpm build
