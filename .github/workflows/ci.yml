@@ -46,7 +46,7 @@ jobs:
           if [[ -z "$base" ]]; then base="${{ github.event.before }}"; fi
           files="$(git diff --name-only "$base" HEAD 2>/dev/null || git show --pretty='' --name-only HEAD)"
           if [[ -n "$files" ]] && ! grep -Ev '^(docs/|README[^/]*$|.*\.md$)' <<<"$files" >/dev/null; then echo "runtime=false" >> "$GITHUB_OUTPUT"; else echo "runtime=true" >> "$GITHUB_OUTPUT"; fi
-      - uses: pnpm/action-setup@f520eceda224fe1a4aed5a2a27a194379a409996 # v6
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
         if: steps.changes.outputs.runtime == 'true' && github.event_name != 'push'
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         if: steps.changes.outputs.runtime == 'true' && github.event_name != 'push'
