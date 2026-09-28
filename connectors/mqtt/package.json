@@ -20,7 +20,7 @@
     "@uc-open-edge/connector-sdk": "workspace:*",
     "@uc-open-edge/core": "workspace:*",
     "@uc-open-edge/schemas": "workspace:*",
-    "mqtt": "^5.0.0",
+    "mqtt": "^5.16.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
